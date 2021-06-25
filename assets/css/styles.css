@@ -1,0 +1,44 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    color: #fff;
+}
+
+h3 span{
+    color: #224e2c;
+    font-weight: normal;
+}
+
+hr{
+    width: 100%;
+    background: rgba(255, 255, 255, .6);
+}
+
+body{
+    /* background: radial-gradient(circle, rgba(86,197,112,1) 0%, rgba(63,117,75,1) 100%); */
+    background-color: #56c570;
+}
+
+header h2{
+    text-align: center;
+    font-size: 25px;
+    padding: 10px 0px;
+    background-color: #353535;
+    color: #56c570;
+}
+
+.carta{
+    position: relative;
+    max-width: 110px;
+    left: 60px;
+    margin: 20px 0px 20px -50px;
+    transform: rotate(10deg);
+    filter: drop-shadow(-2px 2px 4px rgba(0,0,0, .2)); 
+}
+
+#jugador-cartas, #pc-cartas{
+    min-height: 170px;
+}
