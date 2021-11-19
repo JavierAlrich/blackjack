@@ -8,21 +8,37 @@
     // S - Swords (Espadas)
 
     let deck = [];
-    const tipos = ['C', 'D', 'H', 'S'];
-    const especiales = ['A', 'J', 'Q', 'K'];
-    let puntosJugador = 0;
-    let puntosPC = 0;
+    const tipos = ['C', 'D', 'H', 'S'],
+          especiales = ['A', 'J', 'Q', 'K'];
+
+    let puntosJugadores = [];
 
     // Referencias HTML
-    const btnPedirCarta = document.querySelector('#btnPedirCarta');
-    const puntosSpan = document.querySelectorAll('span');
-    const jugadorCartas = document.querySelector('#jugador-cartas');
-    const pcCartas = document.querySelector('#pc-cartas');
-    const btnDetenerJuego = document.querySelector('#btnDetenerJuego');
-    const btnNuevoJuego = document.querySelector('#btnNuevoJuego');
+    const btnPedirCarta = document.querySelector('#btnPedirCarta'),
+          btnDetenerJuego = document.querySelector('#btnDetenerJuego'),
+          btnNuevoJuego = document.querySelector('#btnNuevoJuego');
+        
+    const puntosSpan = document.querySelectorAll('span'),
+          pcCartas = document.querySelector('#pc-cartas'),
+          jugadorCartas = document.querySelector('#jugador-cartas');
+
+    
+    const inicializarJuego = ( numJugadores = 2 ) => {
+        deck = crearDeck();
+
+        for(let i = 0; i < numJugadores; i++){
+            puntosJugadores.push(0);
+        }
+
+        console.log({puntosJugadores});
+
+    }
 
     // Función para crear un nuevo deck y lo barajea -> random
     const crearDeck = () => {
+
+        deck = [];
+        
         for(let i = 2; i <= 10; i++){
             for(let tipo of tipos){
                 deck.push(i + tipo);
@@ -35,12 +51,9 @@
             }
         }
 
-        // shuffle viene de la librería underscore.js
-        deck = _.shuffle(deck);
-        return deck;
+        // shuffle viene de la librería underscore.js        
+        return _.shuffle(deck);
     }
-
-    crearDeck();
 
     // Función para pedir carta
     const pedirCarta = () => {
@@ -51,9 +64,7 @@
             throw 'Ya no hay cartas en el deck';
         }
 
-        let carta = deck.pop();
-
-        return carta;
+        return deck.pop();
     }
 
     // Asignar el valor a la carta obtenida
@@ -78,6 +89,10 @@
         return (isNaN(valor)) ?
                 (valor === 'A') ? 11 : 10
                 : valor * 1; 
+    }
+
+    const acumularPuntos = () => {
+        
     }
 
     // --------------------------------- Turno de la computadora ---------------------------------
@@ -152,16 +167,22 @@
     });
 
     btnNuevoJuego.addEventListener('click', ()=> {
-        deck = [];
-        crearDeck();
+        // deck = [];
+        // crearDeck();
+        inicializarJuego();
+        
         puntosJugador = 0;
         puntosPC = 0;
+        
         puntosSpan[0].innerText = 0;
         puntosSpan[1].innerText = 0;
+        
         btnPedirCarta.disabled = false;
         btnDetenerJuego.disabled = false;
+        
         jugadorCartas.innerHTML = '';
         pcCartas.innerHTML = '';
+        
         console.clear();
     });
     
