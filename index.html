@@ -16,8 +16,8 @@
     <div class="mt-2">
         <div class="col text-center">
             <button id="btnNuevoJuego" class="btn btn-warning">Nuevo juego</button>
-            <button id="btnPedirCarta" class="btn btn-info">Pedir carta</button>
-            <button id="btnDetenerJuego" class="btn btn-info">Detener juego</button>
+            <button id="btnPedirCarta" class="btn btn-info" disabled>Pedir carta</button>
+            <button id="btnDetenerJuego" class="btn btn-info" disabled>Detener juego</button>
         </div>
     </div>
 
@@ -42,5 +42,11 @@
     
     <script src="assets/js/underscore-min.js"></script>
     <script src="assets/js/juego.js"></script>
+    <script>
+        
+        document.querySelector('#btnNuevoJuego').addEventListener ('click', () => {
+            blackjack.nuevoJuego();
+        })
+    </script>
 </body>
 </html>

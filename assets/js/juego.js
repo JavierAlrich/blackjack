@@ -1,5 +1,5 @@
 
-(() => {
+const blackjack = (() => {
     'use strict'
 
     // C - Clubs (Tréboles)
@@ -25,9 +25,17 @@
     const inicializarJuego = ( numJugadores = 2 ) => {
         deck = crearDeck();
 
+        puntosJugadores = [];
+
         for(let i = 0; i < numJugadores; i++){
             puntosJugadores.push(0);
         }
+
+        puntosSpan.forEach( elem => elem.innerText = 0 );
+        divCartasJugaodores.forEach(elem => elem.innerHTML = '');
+        
+        btnPedirCarta.disabled = false;
+        btnDetenerJuego.disabled = false;
     }
 
     // Función para crear un nuevo deck y lo barajea -> random
@@ -101,6 +109,25 @@
         divCartasJugaodores[turno].append(imgCarta);
     }
 
+    const determinarGanador = () => {
+
+        const [puntosMinimos, puntosPC] = puntosJugadores;
+
+        setTimeout(() => {        
+            if((puntosMinimos > puntosPC) && (puntosMinimos <= 21)){
+                alert('Has ganado!');
+            }else if((puntosPC > puntosMinimos) && (puntosPC <= 21)){
+                alert('Has perdido');
+            }else if(puntosMinimos === puntosPC){
+                alert('Has empatado');
+            }else if((puntosMinimos < puntosPC) && (puntosPC > 21)){
+                alert('Has ganado!');
+            }else if((puntosPC < puntosMinimos) && (puntosMinimos > 21)){
+                alert('Has perdido');
+            }
+        }, 100);
+    }
+    
     // --------------------------------- Turno de la computadora ---------------------------------
 
     const turnoComputadora = (puntosMinimos) => {
@@ -113,36 +140,10 @@
             puntosPC = acumularPuntos(carta, puntosJugadores.length - 1);
             crearCarta(carta, puntosJugadores.length - 1);
 
-            // const imgCarta = document.createElement('img');
-            // imgCarta.src = `assets/cartas/${carta}.png`;
-            // imgCarta.classList.add('carta');
-            // pcCartas.append(imgCarta);
+        }while((puntosPC < puntosMinimos) && (puntosMinimos <= 21));
 
-            if(puntosMinimos > 21){
-                break;
-            }
-
-        }while(puntosPC < puntosMinimos && puntosPC <= 21);
-
-        setTimeout(() => {
-            // if(puntosMinimos === puntosPC){
-            //     alert('Has empatado');
-            // }else if(puntosMinimos > 21){
-            //     alert('Has perdido');
-            // }
+        determinarGanador();
         
-            if(puntosMinimos > puntosPC && puntosMinimos <= 21){
-                alert('Has ganado!');
-            }else if(puntosPC > puntosMinimos && puntosPC <= 21){
-                alert('Has perdido');
-            }else if(puntosMinimos === puntosPC){
-                alert('Has empatado');
-            }else if(puntosMinimos < puntosPC && puntosPC > 21){
-                alert('Has ganado!');
-            }else if(puntosPC < puntosMinimos && puntosMinimos > 21){
-                alert('Has perdido');
-            }
-        }, 10);
     }  
 
     // --------------------------------- Eventos ---------------------------------
@@ -167,26 +168,15 @@
     btnDetenerJuego.addEventListener('click', () => {
         btnPedirCarta.disabled = true;
         btnDetenerJuego.disabled = true;
-        turnoComputadora(puntosJugador);
+        turnoComputadora(puntosJugadores[0]);
     });
 
-    btnNuevoJuego.addEventListener('click', ()=> {
-        // deck = [];
-        // crearDeck();
-        inicializarJuego();
-        console.clear();
-        
-        // puntosJugador = 0;
-        // puntosPC = 0;
-        
-        // puntosSpan[0].innerText = 0;
-        // puntosSpan[1].innerText = 0;
-        
-        // btnPedirCarta.disabled = false;
-        // btnDetenerJuego.disabled = false;
-        
-        // jugadorCartas.innerHTML = '';
-        // pcCartas.innerHTML = '';
-    });
+    // btnNuevoJuego.addEventListener('click', ()=> {
+    //     inicializarJuego();
+    // });
+
+    return {
+        nuevoJuego: inicializarJuego
+    };
     
 })();
